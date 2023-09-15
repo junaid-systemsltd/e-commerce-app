@@ -18,6 +18,10 @@ import { FormContainerComponent } from './components/ui/form-container/form-cont
 // Services
 import { AuthService } from './core/services/user/auth.service';
 import { UserApiService } from './core/services/user/user-api.service';
+import { ProductsComponent } from './views/products/products.component';
+import { ProductService } from './core/services/product/product.service';
+import { ProductApiService } from './core/services/product/product-api.service';
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
   declarations: [
@@ -29,9 +33,11 @@ import { UserApiService } from './core/services/user/user-api.service';
     FormContainerComponent,
     LoaderComponent,
     MessageComponent,
+    ProductsComponent,
+    ProductComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
-  providers: [UserApiService, AuthService],
+  providers: [UserApiService, AuthService, ProductApiService, ProductService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

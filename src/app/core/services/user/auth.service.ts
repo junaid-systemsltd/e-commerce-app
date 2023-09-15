@@ -49,7 +49,6 @@ export class AuthService {
   }
 
   private getUserFromLocalStorage(): UserT {
-    console.log('getUserFromLocalStorage');
     if (localStorage.getItem('user') !== null) {
       const userItem = localStorage.getItem('user');
       const user = userItem && JSON.parse(userItem);

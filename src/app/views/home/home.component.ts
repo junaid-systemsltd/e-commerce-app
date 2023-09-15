@@ -12,10 +12,6 @@ export class HomeComponent implements OnInit {
   subscription: Subscription;
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.auth.userSubject.subscribe((data) => {
-      console.log(data, '###########');
-    });
+    this.auth.userSubject.subscribe((data) => {});
   }
 }
