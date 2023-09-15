@@ -1,1 +1,73 @@
-<h3>Login page</h3>
+<app-form-container>
+  <h1>Sign in</h1>
+
+  <form novalidate #loginForm="ngForm" (ngSubmit)="onSubmitHandler()">
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email" class="form-label">Email Address:</label>
+      <input
+        class="form-control"
+        name="email"
+        type="email"
+        #email="ngModel"
+        placeholder="Enter email"
+        [ngClass]="{
+          'is-valid': email['status'] === 'VALID' && email['touched'],
+          'is-invalid': email['status'] === 'INVALID' && email['touched']
+        }"
+        ngModel
+        required
+        email
+      />
+      <div class="invalid-feedback">
+        <ng-container *ngIf="email.value == ''; else validation"
+          >Required this field!
+        </ng-container>
+
+        <ng-template #validation> Please enter a valid email! </ng-template>
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group pt-4">
+      <label for="password" class="form-label">Password:</label>
+      <input
+        class="form-control"
+        [ngClass]="{
+          'is-valid': password['status'] === 'VALID' && password['touched'],
+          'is-invalid': password['status'] === 'INVALID' && password['touched']
+        }"
+        name="password"
+        type="password"
+        placeholder="Enter password"
+        #password="ngModel"
+        minlength="4"
+        ngModel
+        required
+      />
+
+      <div class="invalid-feedback">
+        <ng-container *ngIf="password.value == ''"
+          >Required this field!
+        </ng-container>
+
+        <ng-container
+          *ngIf="password.value != '' && password.value?.length < 4"
+        >
+          password must be longer than or equal to 4 characters
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="d-grid mt-5">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!loginForm.valid"
+      >
+        Sign in
+      </button>
+    </div>
+  </form>
+</app-form-container>
