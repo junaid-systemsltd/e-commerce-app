@@ -1,6 +1,15 @@
-import { Component, ViewChild } from '@angular/core';
+// Lib
 import { NgForm } from '@angular/forms';
-import { LoginUser } from 'src/types/user';
+import { Router } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+
+// Components
+import { LoginUser } from 'src/types/user.types';
+import { LoginResponse } from 'src/types/api.types';
+
+// Services
+import { AuthService } from 'src/app/core/services/user/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,10 +17,17 @@ import { LoginUser } from 'src/types/user';
 })
 export class LoginComponent {
   user: LoginUser = { email: '', password: '' };
+  loader: any = false;
+  error: string;
   @ViewChild('loginForm') form: NgForm;
-  constructor() {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   onSubmitHandler() {
-    console.log(this.form.value);
+    this.loader = true;
+    const { email, password } = this.form.value;
+
+    const res = this.auth.login(email, password);
+
+    console.log({ res });
   }
 }

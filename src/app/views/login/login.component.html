@@ -1,12 +1,23 @@
 <app-form-container>
   <h1>Sign in</h1>
 
-  <form novalidate #loginForm="ngForm" (ngSubmit)="onSubmitHandler()">
+  <!-- Error Message -->
+  <ng-container *ngIf="error">
+    <app-message variant="danger">{{ error }}</app-message>
+  </ng-container>
+
+  <form
+    novalidate
+    #loginForm="ngForm"
+    (ngSubmit)="onSubmitHandler()"
+    autocomplete
+  >
     <!-- Email -->
     <div class="form-group">
       <label for="email" class="form-label">Email Address:</label>
       <input
         class="form-control"
+        id="email"
         name="email"
         type="email"
         #email="ngModel"
@@ -32,6 +43,7 @@
     <div class="form-group pt-4">
       <label for="password" class="form-label">Password:</label>
       <input
+        id="password"
         class="form-control"
         [ngClass]="{
           'is-valid': password['status'] === 'VALID' && password['touched'],
@@ -61,12 +73,16 @@
 
     <!-- Submit Button -->
     <div class="d-grid mt-5">
+      <!-- <div class="text-center" *ngIf="loader">
+        <app-loader></app-loader>
+      </div> -->
+
       <button
         type="submit"
         class="btn btn-primary"
-        [disabled]="!loginForm.valid"
+        [disabled]="!loginForm.valid || loader"
       >
-        Sign in
+        {{ loader ? "Signing in" : "Sign in" }}
       </button>
     </div>
   </form>

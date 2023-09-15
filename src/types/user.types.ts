@@ -3,6 +3,8 @@ export interface LoginUser {
   password: string;
 }
 
-interface IUser {
+export interface IUser {
   email: string;
+  access_token: string;
+  refresh_token: string;
 }
