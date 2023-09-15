@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IUser } from 'src/types/user.types';
+import { IUser, UserT } from 'src/types/user.types';
 import { UserApiService } from './user-api.service';
 import { LoginResponse } from 'src/types/api.types';
 
@@ -10,33 +10,37 @@ import { LoginResponse } from 'src/types/api.types';
 })
 export class AuthService {
   constructor(private userApi: UserApiService) {}
-  userSubject = new BehaviorSubject<IUser | null>(
-    this.getUserFromLocalStorage()
-  );
+  userSubject = new BehaviorSubject<UserT>(this.getUserFromLocalStorage());
+  errorSubject = new BehaviorSubject<string>('');
 
   isLoggedIn(): boolean {
     return !!this.userSubject.value;
+  }
+
+  getUser(): Observable<UserT> {
+    return this.userSubject.asObservable();
+  }
+
+  getError(): Observable<string> {
+    return this.errorSubject.asObservable();
   }
 
   /**
    *  Login the user then tell all the subscribers about the new status
    */
   login(email: string, password: string): any {
-    let error = '';
-
     this.userApi.loginUser(email, password).subscribe({
       // Success Handler
       next: (data: LoginResponse) => {
-        this.userSubject.next({ ...data, email });
-        console.log({ data });
+        const user: IUser = { ...data, email };
+        localStorage.setItem('user', JSON.stringify(user));
+        this.userSubject.next(user);
       },
       // Error Handler
       error: (error: HttpErrorResponse) => {
-        error = error.error.message;
+        this.errorSubject.next(error.error.message);
       },
     });
-
-    return error;
   }
 
   logout(): void {
@@ -44,14 +48,11 @@ export class AuthService {
     this.userSubject.next(null);
   }
 
-  private getUserFromLocalStorage(): IUser | null {
+  private getUserFromLocalStorage(): UserT {
+    console.log('getUserFromLocalStorage');
     if (localStorage.getItem('user') !== null) {
       const userItem = localStorage.getItem('user');
-      console.log({ userItem });
-
       const user = userItem && JSON.parse(userItem);
-      console.log({ user }, '#######');
-
       return user;
     }
 

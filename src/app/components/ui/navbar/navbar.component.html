@@ -28,12 +28,41 @@
             Cart
           </a>
         </li>
-        <li class="nav-item">
-          <a [routerLink]="['/login']" class="nav-link">
-            <i class="fas fa-user"></i>
-            Sign in
-          </a>
-        </li>
+
+        <ul class="navbar-nav" *ngIf="user; else login">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              id="navbarDarkDropdownMenuLink"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {{ user.email }}
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-dark"
+              aria-labelledby="navbarDarkDropdownMenuLink"
+            >
+              <li>
+                <a [routerLink]="['/profile']" class="dropdown-item">
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a (click)="logoutHandler()" class="dropdown-item"> Logout </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ng-template #login>
+          <li class="nav-item">
+            <a [routerLink]="['/login']" class="nav-link">
+              <i class="fas fa-user"></i>
+              Sign in
+            </a>
+          </li>
+        </ng-template>
       </ul>
     </div>
   </div>
