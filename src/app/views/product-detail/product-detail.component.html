@@ -1,0 +1,54 @@
+<a class="btn btn-light my-3" [routerLink]="['/products']">
+    Go Back
+</a>
+
+<!-- Loader Component -->
+<div class="text-center my-5" *ngIf="loading else productDetails">
+    <app-loader/>
+</div>
+
+<app-message *ngIf="error" variant="danger"> {{error}} </app-message>
+
+<ng-template #productDetails>
+    <div class="row" *ngIf="product">
+        <div class="col-md-6">
+            <img [src]="product?.images?.[0]" [alt]="product.title" >
+        </div>
+        <div class="col-md-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h3>{{product.title}}</h3>
+                </li>
+                <li class="list-group-item">
+                    Price: {{product.price | currency}}
+                </li>
+                <li class="list-group-item">
+                    Description: {{ product.description }}
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col">
+                            Price: 
+                        </div>
+                        <div class="col">
+                            <strong>
+                                {{product.price | currency}}
+                            </strong>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <button class="btn btn-primary w-100">
+                        Add to Cart
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</ng-template>
+
+

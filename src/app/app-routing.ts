@@ -1,16 +1,29 @@
+// Libs
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+// Components
 import { HomeComponent } from './views/home/home.component';
-import { NotFoundComponent } from './views/not-found/not-found.component';
 import { LoginComponent } from './views/auth/login/login.component';
 import { ProductsComponent } from './views/products/products.component';
-import { AdminProductsComponent } from './views/admin/admin-products/admin-products.component';
-import { AdminUsersComponent } from './views/admin/admin-users/admin-users.component';
+import { NotFoundComponent } from './views/not-found/not-found.component';
 import { RegisterComponent } from './views/auth/register/register.component';
+import { AdminUsersComponent } from './views/admin/admin-users/admin-users.component';
+import { ProductDetailComponent } from './views/product-detail/product-detail.component';
+import { AdminProductsComponent } from './views/admin/admin-products/admin-products.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'products', component: ProductsComponent },
+  {
+    path: 'product',
+    children: [
+      {
+        path: ':id',
+        component: ProductDetailComponent,
+      },
+    ],
+  },
   // Authentication Routes
   {
     path: 'auth',

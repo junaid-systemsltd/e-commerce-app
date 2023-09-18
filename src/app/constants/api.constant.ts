@@ -11,3 +11,4 @@ export const REGISTER_USER_ENDPOINT = BASE_URL + '/users';
 // PRODUCTS ENDPOINT
 export const GET_ALL_PRODUCTS_ENDPOINT =
   BASE_URL + '/products/?offset=0&limit=10';
+export const GET_PRODUCT_ENDPOINT = BASE_URL + '/products';

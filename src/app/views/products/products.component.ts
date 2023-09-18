@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import ObservableHandler from 'src/app/core/helpers/ObservableHandler';
 import { ProductService } from 'src/app/core/services/product/product.service';
 import { TProduct } from 'src/types/product.types';
 
@@ -7,21 +8,25 @@ import { TProduct } from 'src/types/product.types';
   templateUrl: './products.component.html',
 })
 export class ProductsComponent implements OnInit {
-  constructor(private product: ProductService) {}
+  constructor(private productService: ProductService) {
+    this.productService.getProductsApi();
+  }
   products: TProduct;
   loading: boolean;
   error: string;
   ngOnInit(): void {
-    this.product.getProducts().subscribe((products) => {
+    this.productService.getProducts().subscribe((products) => {
       this.products = products;
     });
 
-    this.product.getLoader().subscribe((loader) => {
-      this.loading = loader;
-    });
+    ObservableHandler.errorHandler(
+      this.productService.getProductsError(),
+      this
+    );
 
-    this.product.getError().subscribe((error) => {
-      this.error = error;
-    });
+    ObservableHandler.loadingHandler(
+      this.productService.getProductsLoader(),
+      this
+    );
   }
 }

@@ -27,6 +27,7 @@ import { ProductService } from './core/services/product/product.service';
 import { AdminApiService } from './core/services/admin/admin-api.service';
 import { ProductApiService } from './core/services/product/product-api.service';
 import { RegisterComponent } from './views/auth/register/register.component';
+import { ProductDetailComponent } from './views/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { RegisterComponent } from './views/auth/register/register.component';
     AdminProductsComponent,
     AdminUsersComponent,
     RegisterComponent,
+    ProductDetailComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [
