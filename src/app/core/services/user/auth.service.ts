@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
 // Custom Modules
-import { User, UserT } from 'src/types/user.types';
+import { User } from 'src/types/user.types';
 import { UserApiService } from './user-api.service';
 import { LoginResponse, ProfileApiResponse } from 'src/types/api.types';
 

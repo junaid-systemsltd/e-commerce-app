@@ -18,3 +18,5 @@ export type ProfileApiResponse = {
   creationAt: Date;
   updatedAt: Date;
 };
+
+export type UsersList = ProfileApiResponse[];
