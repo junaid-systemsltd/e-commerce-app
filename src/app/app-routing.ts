@@ -11,10 +11,12 @@ import { RegisterComponent } from './views/auth/register/register.component';
 import { AdminUsersComponent } from './views/admin/admin-users/admin-users.component';
 import { ProductDetailComponent } from './views/product-detail/product-detail.component';
 import { AdminProductsComponent } from './views/admin/admin-products/admin-products.component';
+import { authGuard } from './core/guards/auth.guard';
+import { adminAuthGuard } from './core/guards/admin-auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'products', component: ProductsComponent },
+  { path: 'products', component: ProductsComponent, canActivate: [authGuard] },
   {
     path: 'product',
     children: [
@@ -39,6 +41,7 @@ const routes: Routes = [
       { path: 'products', component: AdminProductsComponent },
       { path: 'users', component: AdminUsersComponent },
     ],
+    canActivate: [adminAuthGuard],
   },
   // 404 Route
   { path: '**', component: NotFoundComponent },

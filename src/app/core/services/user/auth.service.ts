@@ -29,6 +29,10 @@ export class AuthService {
     return !!this.loginUser.value;
   }
 
+  isAdmin(): boolean {
+    return this.loginUser.value?.role === 'admin';
+  }
+
   getUser(): Observable<User | null> {
     return this.loginUser.asObservable();
   }

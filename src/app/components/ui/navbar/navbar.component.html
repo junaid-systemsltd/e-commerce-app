@@ -32,7 +32,11 @@
       </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a [routerLink]="['/cart']" class="nav-link">
+          <a
+            [routerLink]="['/cart']"
+            class="nav-link"
+            routerLinkActive="active"
+          >
             <i class="fas fa-shopping-cart"></i>
             Cart
           </a>
@@ -47,7 +51,7 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <i class="fas fa-user"></i> 
+              <i class="fas fa-user"></i>
               {{ user.name }}
             </a>
             <ul
@@ -97,7 +101,11 @@
 
         <ng-template #login>
           <li class="nav-item">
-            <a [routerLink]="['auth', 'login']" class="nav-link">
+            <a
+              [routerLink]="['auth', 'login']"
+              routerLinkActive="active"
+              class="nav-link"
+            >
               <i class="fas fa-user"></i>
               Sign in
             </a>
