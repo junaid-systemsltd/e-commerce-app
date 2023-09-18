@@ -8,7 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 // Components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './views/home/home.component';
-import { LoginComponent } from './views/login/login.component';
+import { LoginComponent } from './views/auth/login/login.component';
 import { ProductsComponent } from './views/products/products.component';
 import { LoaderComponent } from './components/ui/loader/loader.component';
 import { NavbarComponent } from './components/ui/navbar/navbar.component';
@@ -26,6 +26,7 @@ import { UserApiService } from './core/services/user/user-api.service';
 import { ProductService } from './core/services/product/product.service';
 import { AdminApiService } from './core/services/admin/admin-api.service';
 import { ProductApiService } from './core/services/product/product-api.service';
+import { RegisterComponent } from './views/auth/register/register.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ProductApiService } from './core/services/product/product-api.service';
     ProductComponent,
     AdminProductsComponent,
     AdminUsersComponent,
+    RegisterComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [

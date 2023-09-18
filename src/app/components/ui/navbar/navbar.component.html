@@ -47,7 +47,8 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              {{ user.email }}
+              <i class="fas fa-user"></i> 
+              {{ user.name }}
             </a>
             <ul
               class="dropdown-menu dropdown-menu-dark"
@@ -96,7 +97,7 @@
 
         <ng-template #login>
           <li class="nav-item">
-            <a [routerLink]="['/login']" class="nav-link">
+            <a [routerLink]="['auth', 'login']" class="nav-link">
               <i class="fas fa-user"></i>
               Sign in
             </a>

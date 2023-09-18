@@ -1,0 +1,113 @@
+<app-form-container>
+  <h1>Sign Up</h1>
+
+  <!-- Error Component -->
+  <ng-container *ngIf="error">
+    <app-message variant="danger">{{ error }}</app-message>
+  </ng-container>
+  
+  <form
+    novalidate
+    #regForm="ngForm"
+    (ngSubmit)="onSubmitHandler()"
+    autocomplete="off"
+  >
+    <!-- Name -->
+    <div class="form-group">
+      <label for="name" class="form-label">Name:</label>
+      <input
+        class="form-control"
+        id="name"
+        name="name"
+        #name="ngModel"
+        placeholder="Enter name"
+        [ngClass]="{
+          'is-valid': name['status'] === 'VALID' && name['touched'],
+          'is-invalid': name['status'] === 'INVALID' && name['touched']
+        }"
+        ngModel
+        required
+      />
+      <div class="invalid-feedback">
+        <ng-container *ngIf="name.value == ''"
+          >Required this field!
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email" class="form-label">Email Address:</label>
+      <input
+        class="form-control"
+        id="email"
+        name="email"
+        type="email"
+        #email="ngModel"
+        placeholder="Enter email"
+        [ngClass]="{
+          'is-valid': email['status'] === 'VALID' && email['touched'],
+          'is-invalid': email['status'] === 'INVALID' && email['touched']
+        }"
+        ngModel
+        required
+        email
+      />
+      <div class="invalid-feedback">
+        <ng-container *ngIf="email.value == ''; else validation"
+          >Required this field!
+        </ng-container>
+
+        <ng-template #validation> Please enter a valid email! </ng-template>
+      </div>
+    </div>
+    <!-- Password -->
+    <div class="form-group pt-4">
+      <label for="password" class="form-label">Password:</label>
+      <input
+        id="password"
+        class="form-control"
+        [ngClass]="{
+          'is-valid': password['status'] === 'VALID' && password['touched'],
+          'is-invalid': password['status'] === 'INVALID' && password['touched']
+        }"
+        name="password"
+        type="password"
+        placeholder="Enter password"
+        #password="ngModel"
+        minlength="4"
+        ngModel
+        required
+      />
+
+      <div class="invalid-feedback">
+        <ng-container *ngIf="password.value == ''"
+          >Required this field!
+        </ng-container>
+
+        <ng-container
+          *ngIf="password.value != '' && password.value?.length < 4"
+        >
+          password must be longer than or equal to 4 characters
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="d-grid mt-5">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!regForm.valid || loading"
+      >
+        {{ loading ? "Signing up" : "Sign up" }}
+      </button>
+    </div>
+  </form>
+  <div class="row py-3">
+    <div class="col">
+      Have an Account
+      <a class="link" [routerLink]="['/auth', 'login']">Sign in</a>
+    </div>
+  </div>
+</app-form-container>

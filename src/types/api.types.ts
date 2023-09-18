@@ -8,6 +8,14 @@ export type LoginResponse = {
   refresh_token: string;
 };
 
+export type RegisterUser = {
+  email: string;
+  name: string;
+  password: string;
+  role: Roles;
+  avatar: string;
+};
+
 export type ProfileApiResponse = {
   avatar: string;
   email: string;

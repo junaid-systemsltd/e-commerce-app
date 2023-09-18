@@ -7,11 +7,7 @@ import { AuthService } from 'src/app/core/services/user/auth.service';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  constructor(private auth: AuthService) {}
-  items: any;
-  subscription: Subscription;
+  constructor() {}
 
-  ngOnInit(): void {
-    this.auth.userSubject.subscribe((data) => {});
-  }
+  ngOnInit(): void {}
 }
