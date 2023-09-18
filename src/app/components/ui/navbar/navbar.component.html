@@ -64,6 +64,36 @@
             </ul>
           </li>
         </ul>
+
+        <ul class="navbar-nav" *ngIf="user && user.role === 'admin'">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              id="navbarDarkDropdownMenuLink"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Admin
+            </a>
+            <ul
+              class="dropdown-menu dropdown-menu-dark"
+              aria-labelledby="navbarDarkDropdownMenuLink"
+            >
+              <li>
+                <a [routerLink]="['/admin/users']" class="dropdown-item">
+                  Users
+                </a>
+              </li>
+              <li>
+                <a [routerLink]="['/admin/products']" class="dropdown-item">
+                  Products
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
         <ng-template #login>
           <li class="nav-item">
             <a [routerLink]="['/login']" class="nav-link">

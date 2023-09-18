@@ -1,23 +1,28 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+// Libs
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IUser, UserT } from 'src/types/user.types';
+import { HttpErrorResponse } from '@angular/common/http';
+
+// Custom Modules
+import { User, UserT } from 'src/types/user.types';
 import { UserApiService } from './user-api.service';
-import { LoginResponse } from 'src/types/api.types';
+import { LoginResponse, ProfileApiResponse } from 'src/types/api.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   constructor(private userApi: UserApiService) {}
-  userSubject = new BehaviorSubject<UserT>(this.getUserFromLocalStorage());
+  userSubject = new BehaviorSubject<User | null>(
+    this.getUserFromLocalStorage()
+  );
   errorSubject = new BehaviorSubject<string>('');
 
   isLoggedIn(): boolean {
     return !!this.userSubject.value;
   }
 
-  getUser(): Observable<UserT> {
+  getUser(): Observable<User | null> {
     return this.userSubject.asObservable();
   }
 
@@ -25,18 +30,41 @@ export class AuthService {
     return this.errorSubject.asObservable();
   }
 
-  /**
-   *  Login the user then tell all the subscribers about the new status
-   */
   login(email: string, password: string): any {
     this.userApi.loginUser(email, password).subscribe({
-      // Success Handler
+      /* Login Api Success Handler */
       next: (data: LoginResponse) => {
-        const user: IUser = { ...data, email };
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
+        /* Headers for Profile Api */
+        const headers = new Headers({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${data.access_token}`,
+        });
+
+        this.userApi.profile(headers).subscribe({
+          /* Profile Api Success Handler */
+          next: (user: ProfileApiResponse) => {
+            const { email, role, name } = user;
+            const { access_token, refresh_token } = data;
+
+            const updatedUser: User = {
+              email,
+              role,
+              name,
+              access_token,
+              refresh_token,
+            };
+
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            this.userSubject.next(updatedUser);
+          },
+          /* Profile Api Error Handler */
+          error: (error: HttpErrorResponse) => {
+            this.errorSubject.next(error.error.message);
+          },
+        });
       },
-      // Error Handler
+
+      /* Login Error Handler */
       error: (error: HttpErrorResponse) => {
         this.errorSubject.next(error.error.message);
       },
@@ -48,7 +76,7 @@ export class AuthService {
     this.userSubject.next(null);
   }
 
-  private getUserFromLocalStorage(): UserT {
+  private getUserFromLocalStorage(): User | null {
     if (localStorage.getItem('user') !== null) {
       const userItem = localStorage.getItem('user');
       const user = userItem && JSON.parse(userItem);

@@ -1,8 +1,11 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { BASE_URL, LOGIN_ENDPOINT } from 'src/app/constants/api.constant';
+import {
+  LOGIN_ENDPOINT,
+  PROFILE_ENDPOINT,
+} from 'src/app/constants/api.constant';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +14,11 @@ export class UserApiService {
   constructor(private http: HttpClient) {}
 
   loginUser(email: string, password: string): Observable<any> {
-    const endpoint = BASE_URL + LOGIN_ENDPOINT;
     const body = { email, password };
-    return this.http.post<any>(endpoint, body);
+    return this.http.post<any>(LOGIN_ENDPOINT, body);
+  }
+
+  profile(headers?: any): Observable<any> {
+    return this.http.get<any>(PROFILE_ENDPOINT, { headers });
   }
 }

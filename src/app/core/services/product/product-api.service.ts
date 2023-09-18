@@ -14,7 +14,6 @@ export class ProductApiService {
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<IProduct[]> {
-    const endpoint = BASE_URL + GET_ALL_PRODUCTS_ENDPOINT;
-    return this.http.get<IProduct[]>(endpoint);
+    return this.http.get<IProduct[]>(GET_ALL_PRODUCTS_ENDPOINT);
   }
 }
