@@ -11,6 +11,8 @@ import { RegisterComponent } from './views/auth/register/register.component';
 import { AdminUsersComponent } from './views/admin/admin-users/admin-users.component';
 import { ProductDetailComponent } from './views/product-detail/product-detail.component';
 import { AdminProductsComponent } from './views/admin/admin-products/admin-products.component';
+
+// Guards
 import { authGuard } from './core/guards/auth.guard';
 import { adminAuthGuard } from './core/guards/admin-auth.guard';
 
@@ -37,10 +39,8 @@ const routes: Routes = [
   // Admin Routes
   {
     path: 'admin',
-    children: [
-      { path: 'products', component: AdminProductsComponent },
-      { path: 'users', component: AdminUsersComponent },
-    ],
+    loadChildren: () =>
+      import('./views/admin/admin.routing').then((m) => m.AdminRoutingModule),
     canActivate: [adminAuthGuard],
   },
   // 404 Route
